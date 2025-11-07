@@ -69,7 +69,7 @@ const ServiceItem = React.forwardRef(
         style={{
           background: isActive ? "rgba(0, 174, 107, 0.2)" : "transparent",
           border: isActive ? `2px solid ${COLOR_PRIMARY}` : "none",
-          zIndex: isActive ? 20 : 1,
+          zIndex: isActive ? 10 : 1,
           transition: "none",
         }}
         onClick={() => onClick(service.id)}
@@ -240,7 +240,7 @@ export default function ServiceNavigator() {
             }}
           />
           <div
-            className="absolute top-1/2 right-[-200px] lg:right-[-400px] w-[300px] h-[300px] lg:w-[600px] lg:h-[600px] rounded-full border-8 -translate-y-1/2 pointer-events-none z-20"
+            className="absolute top-1/2 right-[-200px] lg:right-[-400px] w-[300px] h-[300px] lg:w-[600px] lg:h-[600px] rounded-full border-8 -translate-y-1/2 pointer-events-none z-10"
             style={{
               background: COLOR_SECONDARY,
               borderColor: COLOR_GREEN_300,

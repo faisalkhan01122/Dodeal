@@ -110,7 +110,7 @@ const HeroSection = () => {
         </div>
 
         {/* 🔹 Navbar */}
-        <div className="relative z-20">
+        <div className="absolute z-20">
           <Navbar />
         </div>
 
