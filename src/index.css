@@ -1,0 +1,84 @@
+/* 1️⃣ Must be at the top */
+@import url("https://fonts.cdnfonts.com/css/effra-trial");
+
+@import "tailwindcss";
+
+/* Then normal CSS */
+body {
+  background: #011a26;
+}
+
+body {
+  background: #011a26;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+}
+
+.navlink.active {
+  color: #00af6b;
+  font-weight: 700;
+}
+
+.font-effra {
+  font-family: "Effra Trial", sans-serif;
+}
+/* Animation for spin/fade when nav changes */
+.spin-in {
+  animation: spin-in-fade 0.55s cubic-bezier(0.6, 0, 0.6, 1) both;
+}
+.spin-out {
+  animation: spin-out-fade 0.55s cubic-bezier(0.6, 0, 0.6, 1) both;
+}
+@keyframes spin-in-fade {
+  from {
+    opacity: 0;
+    transform: scale(0.9) rotate(-7deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+@keyframes spin-out-fade {
+  from {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.97) rotate(8deg);
+  }
+}
+
+/* Overlay glowing radial background for the active tab */
+.spin-glow {
+  background: radial-gradient(
+    circle,
+    rgba(0, 174, 107, 0.25) 0%,
+    transparent 70%
+  );
+  /* border-radius: 9999px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 115%;
+  height: 120%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+  animation: spin-glow 0.85s cubic-bezier(0.43, 0.05, 0.54, 1) both; */
+}
+@keyframes spin-glow {
+  0% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(0.85) rotate(-5deg);
+  }
+  60% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.08) rotate(14deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0);
+  }
+}
