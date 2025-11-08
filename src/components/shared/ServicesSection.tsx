@@ -229,7 +229,7 @@ export default function ServiceNavigator() {
           <motion.div
             layout
             transition={spring}
-            className="absolute h-full w-full flex flex-col items-end mt-5 md:mt-54 gap-5 py-[5px] lg:py-20 text-nowrap px-10  md:px-20"
+            className="absolute h-full w-full flex flex-col items-end mt-5 md:mt-54 gap-5 py-[5px] lg:py-20 text-nowrap px-4  md:px-20"
           >
             {services.map((service, index) => {
               const paddingX = [0].includes(index)
@@ -259,7 +259,7 @@ export default function ServiceNavigator() {
 
         {/* glowing circle */}
         <div
-          className=" absolute top-1/2 right-[250px] lg:right-[-400px] w-[500px] h-[500px] lg:w-[700px] lg:h-[800px] rounded-full -translate-y-1/2 pointer-events-none"
+          className="hidden lg:block absolute top-1/2 right-[250px] lg:right-[-400px] w-[500px] h-[500px] lg:w-[700px] lg:h-[800px] rounded-full -translate-y-1/2 pointer-events-none"
           style={{
             background: `radial-gradient(circle, ${COLOR_PRIMARY}80 0%, ${COLOR_PRIMARY}00 70%)`,
           }}
