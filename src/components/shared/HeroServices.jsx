@@ -16,7 +16,7 @@ const HeroServices = ({
       <h1 className="text-3xl md:text-3xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold capitalize w-fit">
         <span className="text-white">{headingPart1} </span>
         <span className="text-white">{headingPart2} </span>
-        <span className="text-green-500">{headingHighlight}</span>
+        <span className="text-green-700">{headingHighlight}</span>
       </h1>
 
       <p className="text-[rgba(211, 211, 211, 1)] w-full md:w-[30%] text-[12px] md:text-[20px] leading-relaxed">

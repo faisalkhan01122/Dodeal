@@ -8,7 +8,7 @@ const App = () => {
   return (
     <>
       <div
-        className=" w-full min-h-[1024px] text-white"
+        className=" w-full min-h-[1024px] text-white overflow-hidden"
         style={{ fontFamily: "'Effra Trial', sans-serif" }}
       >
         {/* <Navbar /> */}

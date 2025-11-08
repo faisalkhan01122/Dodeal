@@ -104,7 +104,7 @@ const Navbar = () => {
           <button
             onMouseEnter={() => setButtonHovered(true)}
             onMouseLeave={() => setButtonHovered(false)}
-            className="relative z-10 px-8 py-3 rounded-full font-semibold text-[17px] text-white border border-[rgba(192,218,208,0.4)] transition-all duration-500"
+            className="relative z-10 px-8 py-3 rounded-full cursor-pointer font-semibold text-[17px] text-white border border-[rgba(192,218,208,0.4)] transition-all duration-500"
             style={{
               background:
                 "linear-gradient(180deg, rgba(0,174,107,0.74) 0%, rgba(0,174,107,0.7) 100%)",

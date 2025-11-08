@@ -101,19 +101,19 @@ const WeatherDashboard = () => {
     const name = resolveIconName(iconIdentifier);
     switch (name) {
       case "sunny":
-        return <img src={sunnyIcon} alt="Sunny" className="w-8 h-8" />;
+        return <img src={sunnyIcon} alt="Sunny" className="w-12 h-12" />;
       case "cloudy":
-        return <img src={cloudyIcon} alt="Cloudy" className="w-8 h-8" />;
+        return <img src={cloudyIcon} alt="Cloudy" className="w-12 h-12" />;
       case "partly_sunny":
         return (
-          <img src={partlySunnyIcon} alt="Partly Sunny" className="w-8 h-8" />
+          <img src={partlySunnyIcon} alt="Partly Sunny" className="w-12 h-12" />
         );
       case "rain":
-        return <img src={rainIcon} alt="Rainy" className="w-8 h-8" />;
+        return <img src={rainIcon} alt="Rainy" className="w-12 h-12" />;
       case "storm":
-        return <img src={stormIcon} alt="Storm" className="w-8 h-8" />;
+        return <img src={stormIcon} alt="Storm" className="w-12 h-12" />;
       default:
-        return <img src={sunnyIcon} alt="Weather" className="w-8 h-8" />;
+        return <img src={sunnyIcon} alt="Weather" className="w-12 h-12" />;
     }
   };
 
@@ -199,9 +199,11 @@ const WeatherDashboard = () => {
                     key={index}
                     className="bg-transparent rounded-lg py-4 flex flex-col items-center gap-2"
                   >
-                    <p className="text-gray-400 text-xs">{timeStr}</p>
+                    <p className="text-gray-400 text-sm md:text-2xl">
+                      {timeStr}
+                    </p>
                     {getIcon(item.icon)}
-                    <p className="text-lg font-semibold">
+                    <p className="text-lg md:text-xl font-semibold">
                       {Math.round(item.temperature ?? 0)}°
                     </p>
                   </div>
@@ -218,7 +220,7 @@ const WeatherDashboard = () => {
               <div className="flex items-center gap-3">
                 <Thermometer className="text-green-400" />
                 <div>
-                  <p className="text-gray-400 text-sm">Real Feel</p>
+                  <p className="text-gray-400 text-sm md:text-xl">Real Feel</p>
                   <p className="text-xl font-semibold">
                     {current?.temperature ?? "--"}°
                   </p>
@@ -227,7 +229,7 @@ const WeatherDashboard = () => {
               <div className="flex items-center gap-3">
                 <Wind className="text-green-400" />
                 <div>
-                  <p className="text-gray-400 text-sm">Wind</p>
+                  <p className="text-gray-400 text-sm md:text-xl">Wind</p>
                   <p className="text-xl font-semibold">
                     {current?.wind?.speed ?? "--"} Km/H
                   </p>
@@ -236,7 +238,9 @@ const WeatherDashboard = () => {
               <div className="flex items-center gap-3">
                 <Droplets className="text-green-400" />
                 <div>
-                  <p className="text-gray-400 text-sm">Chance To Rain</p>
+                  <p className="text-gray-400 text-sm md:text-xl">
+                    Chance To Rain
+                  </p>
                   <p className="text-xl font-semibold">
                     {current?.precipitation?.total ?? 0}%
                   </p>
@@ -245,7 +249,7 @@ const WeatherDashboard = () => {
               <div className="flex items-center gap-3">
                 <Gauge className="text-green-400" />
                 <div>
-                  <p className="text-gray-400 text-sm">UV Index</p>
+                  <p className="text-gray-400 text-sm md:text-xl">UV Index</p>
                   <p className="text-xl font-semibold">3</p>
                 </div>
               </div>
@@ -260,7 +264,7 @@ const WeatherDashboard = () => {
           <h3 className="text-[rgba(203,190,187,1)] text-sm md:text-[24px] font-bold mb-3 tracking-wide">
             7-DAYS FORECAST
           </h3>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col  gap-2">
             {weekly.map((day, index) => {
               const tMax = readTempMax(day);
               const tMin = readTempMin(day);
@@ -271,20 +275,20 @@ const WeatherDashboard = () => {
                   key={index}
                   className="flex justify-between items-center py-2 border-b border-gray-700 last:border-0 hover:bg-[#0f172a]/50 px-2 rounded-lg transition"
                 >
-                  <span className="text-gray-300 w-16 text-right font-medium">
+                  <span className="text-gray-300 w-16 text-right text-sm md:text-xl font-medium">
                     {dayName}
                   </span>
                   <div className="flex items-center gap-2 flex-grow justify-center">
                     {getIcon(day.icon)}
-                    <span className="text-gray-200 text-sm capitalize hidden sm:inline">
+                    <span className="text-gray-200 text-sm md:text-xl capitalize hidden sm:inline">
                       {String(day.weather ?? day.description ?? "")}
                     </span>
                   </div>
-                  {/* <span className="text-gray-100 font-semibold text-sm">
+                  {/* <span className="text-gray-100 font-semibold text-sm md:text-xl">
                     {tMax !== null ? Math.round(tMax) : "--"}/
                     {tMin !== null ? Math.round(tMin) : "--"}
                   </span> */}
-                  <span className="text-gray-100 font-semibold text-sm">
+                  <span className="text-gray-100 font-semibold text-sm md:text-xl">
                     {36}/{22}
                   </span>
                 </div>

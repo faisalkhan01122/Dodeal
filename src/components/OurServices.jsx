@@ -6,7 +6,7 @@ import ServicesSection from "./shared/ServicesSection";
 const OurServices = () => {
   return (
     <section
-      className="relative w-full min-h-screen  text-center ps-12"
+      className="relative w-full min-h-screen  text-center "
       style={{
         backgroundImage: `url(${bgImage})`,
         backgroundSize: "cover",

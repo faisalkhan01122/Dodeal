@@ -16,7 +16,7 @@ const WeatherSection = () => {
       }}
     >
       {/* HeroServices content */}
-      <div className="relative z-10 pt-10 sm:pt-24 md:pt-28 px-4">
+      <div className="relative z-10 pt-10 sm:pt-20 md:pt-2 px-4">
         <HeroServices
           smallText="Look at our services"
           headingPart1="explore "

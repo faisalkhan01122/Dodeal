@@ -16,7 +16,7 @@ const servicesData = [
     text: "We produce stunning visuals, videos, and content that captivate your audience and elevate your brand presence.",
     iconSrc: "https://dodeal.com/assets/images/svg/s-creative.svg",
     wrapperClass:
-      "relative pr-[60px] rounded-l-full lg:pr-[150px] cursor-pointer transition-all duration-1000",
+      "relative rounded-l-full cursor-pointer transition-all duration-1000",
   },
   {
     id: "web-mobile",
@@ -24,7 +24,7 @@ const servicesData = [
     text: "We craft stunning, high-performance web and mobile applications tailored to your business needs, ensuring a seamless user experience across all devices.",
     iconSrc: "https://dodeal.com/assets/images/svg/s-webmobile.svg",
     wrapperClass:
-      "relative pr-[110px] rounded-l-full lg:pr-[250px] cursor-pointer transition-all duration-1000",
+      "relative rounded-l-full cursor-pointer transition-all duration-1000",
   },
   {
     id: "seo-sem",
@@ -32,7 +32,7 @@ const servicesData = [
     text: "Boost your visibility and drive targeted traffic with our expert search engine optimization (SEO) and search engine marketing (SEM) strategies.",
     iconSrc: "https://dodeal.com/assets/images/svg/s-seosem.svg",
     wrapperClass:
-      "w-[72%] cursor-pointer rounded-l-full px-4 py-2 pl-[10px] pr-[10px] lg:pr-[180px] transition-all duration-1000",
+      "rounded-l-full cursor-pointer px-4 py-2 transition-all duration-1000",
     active: true,
   },
   {
@@ -40,8 +40,7 @@ const servicesData = [
     title: "Digital Marketing",
     text: "Struggling to reach the right customers or tired of wasting money on ads that don’t convert? At Do Deal, we design digital campaigns that target your ideal audience, cut unnecessary costs, and bring you measurable growth you can actually see.",
     iconSrc: "https://dodeal.com/assets/images/svg/s-digital.svg",
-    wrapperClass:
-      "pr-[110px] rounded-l-full lg:pr-[250px] cursor-pointer transition-all duration-1000",
+    wrapperClass: "rounded-l-full cursor-pointer transition-all duration-1000",
   },
   {
     id: "branding-services",
@@ -49,7 +48,7 @@ const servicesData = [
     text: "Establish a powerful and memorable brand identity that resonates with your audience and stands out in a crowded marketplace.",
     iconSrc: "https://dodeal.com/assets/images/svg/s-branding.svg",
     wrapperClass:
-      "relative pr-[60px] rounded-l-full lg:pr-[150px] cursor-pointer transition-all duration-1000",
+      "relative rounded-l-full cursor-pointer transition-all duration-1000",
   },
 ];
 
@@ -75,7 +74,7 @@ const ServiceItem = React.forwardRef(
         onClick={() => onClick(service.id)}
       >
         <div
-          className={`relative w-full flex items-center px-4 py-3 justify-center gap-4 ${
+          className={`relative w-[0px] md:w-[200px] flex items-center px-0 py-3 justify-end gap-4 ${
             isActive ? "" : "opacity-50"
           }`}
         >
@@ -89,15 +88,15 @@ const ServiceItem = React.forwardRef(
             className={
               isActive
                 ? "w-[10px] h-[30px] lg:w-[50px] lg:h-[50px]"
-                : "w-[20px] h-[20px] lg:w-[30px] lg:h-[30px]"
+                : "w-[20px] h-[30px] lg:w-[30px] lg:h-[30px]"
             }
             src={service.iconSrc}
             layout
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           />
           <motion.h2
-            className={`font-semibold ${
-              isActive ? "text-base lg:text-3xl 2xl:text-xl font-semibold" : ""
+            className={`font-semibold text-sm md:[16px] ${
+              isActive ? "text-sm lg:text-[40px] 2xl:text-xl font-bold" : ""
             }`}
             layout
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
@@ -112,15 +111,34 @@ const ServiceItem = React.forwardRef(
 ServiceItem.displayName = "ServiceItem";
 
 export default function ServiceNavigator() {
+  const [services, setServices] = useState(servicesData);
   const [activeServiceId, setActiveServiceId] = useState("seo-sem");
   const containerRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
-  const activeService =
-    servicesData.find((s) => s.id === activeServiceId) || servicesData[2];
+  // the “center index” visually represents the mid of your 5 services
+  const centerIndex = Math.floor(services.length / 2);
 
-  const handleClick = (id: string) => {
-    setActiveServiceId(id);
+  const rotateTo = (clickedId: string) => {
+    const clickedIndex = services.findIndex((s) => s.id === clickedId);
+    if (clickedIndex === -1) return;
+
+    let diff = clickedIndex - centerIndex;
+
+    // handle wrap-around
+    if (diff > services.length / 2) diff -= services.length;
+    if (diff < -services.length / 2) diff += services.length;
+
+    const rotated = [...services];
+
+    // rotate array by diff
+    if (diff !== 0) {
+      const shift = (diff + services.length) % services.length;
+      const newOrder = [...rotated.slice(shift), ...rotated.slice(0, shift)];
+      setServices(newOrder);
+    }
+
+    setActiveServiceId(clickedId);
   };
 
   useEffect(() => {
@@ -141,113 +159,119 @@ export default function ServiceNavigator() {
     damping: 30,
   };
 
+  const activeService =
+    services.find((s) => s.id === activeServiceId) || services[2];
+
   return (
-    <>
-      <style jsx>{`
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen bg-transparent text-white overflow-hidden">
-        <div className="w-full flex items-center justify-start p-6 lg:p-12 order-0 lg:order-1">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeService.id}
-              variants={contentVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              transition={{ duration: 0.3 }}
-              className="max-w-xl text-center lg:text-left"
-            >
-              <h2 className="text-lg lg:text-[32px] 2xl:text-xl font-700 leading-relaxed font-bold mb-4">
-                <span style={{ color: COLOR_PRIMARY }}>
-                  {activeService.title}
-                </span>
-              </h2>
-              <p className="text-sm lg:text-[20px] leading-relaxed text-gray-300 mb-6">
-                {activeService.text}
-              </p>
-              <a
-                href="/marketing-services"
-                className="inline-flex items-center gap-2 px-6 py-2 rounded-full text-white text-[20px] font-medium transition-all hover:scale-105"
-                style={{
-                  background: BUTTON_BG,
-                  border: `1px solid ${COLOR_BUTTON_BORDER}`,
-                  boxShadow: COLOR_BUTTON_SHADOW,
-                }}
-              >
-                See More
-                <svg
-                  width="24"
-                  height="12"
-                  viewBox="0 0 24 12"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M13.1956 10.0911C13.6262 10.9705 14.709 11.2158 15.5945 10.7975L21.7443 7.89204C23.2319 7.0632 23.2306 4.9228 21.7419 4.09568L15.6001 1.19485C14.7119 0.775328 13.6261 1.02386 13.1962 1.90707C12.5813 3.17039 12.2717 4.58271 12.2701 5.99484"
-                    stroke="white"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M1 5.99487H12.0383"
-                    stroke="white"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </a>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        <div className="relative flex items-center justify-end order-1 lg:order-2">
-          <div
-            ref={containerRef}
-            className="h-[400px] lg:h-screen w-full overflow-y-auto overflow-x-hidden scrollbar-hide"
+    <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen bg-transparent text-white overflow-hidden">
+      {/* Left side content */}
+      <div className="w-full flex items-center justify-start p-6 lg:p-20 order-0 lg:order-1">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeService.id}
+            variants={contentVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={{ duration: 0.3 }}
+            className="max-w-4xl text-center lg:text-left"
           >
-            <motion.div
-              layout
-              transition={spring}
-              className="absolute h-full w-full flex flex-col items-end mt-5 md:mt-54 gap-5 py-[5px] lg:py-[100px] px-0"
+            <h2 className="text-lg lg:text-[32px] font-bold mb-4">
+              <span style={{ color: COLOR_PRIMARY }}>
+                {activeService.title}
+              </span>
+            </h2>
+            <p className="text-sm lg:text-[20px]  text-gray-300 mb-6">
+              {activeService.text}
+            </p>
+            <a
+              href="/marketing-services"
+              className="inline-flex items-center gap-2 px-6 py-2 rounded-full text-white text-[20px] font-medium transition-all hover:scale-105"
+              style={{
+                background: BUTTON_BG,
+                border: `1px solid ${COLOR_BUTTON_BORDER}`,
+                boxShadow: COLOR_BUTTON_SHADOW,
+              }}
             >
-              {servicesData.map((service) => (
+              See More
+              <svg
+                width="24"
+                height="12"
+                viewBox="0 0 24 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M13.1956 10.0911C13.6262 10.9705 14.709 11.2158 15.5945 10.7975L21.7443 7.89204C23.2319 7.0632 23.2306 4.9228 21.7419 4.09568L15.6001 1.19485C14.7119 0.775328 13.6261 1.02386 13.1962 1.90707C12.5813 3.17039 12.2717 4.58271 12.2701 5.99484"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M1 5.99487H12.0383"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </a>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Right side services */}
+      <div className="relative flex items-center justify-end order-1 lg:order-2">
+        <div
+          ref={containerRef}
+          className="h-[400px] lg:h-screen w-full overflow-y-auto overflow-x-hidden scrollbar-hide"
+        >
+          <motion.div
+            layout
+            transition={spring}
+            className="absolute h-full w-full flex flex-col items-end mt-5 md:mt-54 gap-5 py-[5px] lg:py-20 text-nowrap px-10  md:px-20"
+          >
+            {services.map((service, index) => {
+              const paddingX = [0].includes(index)
+                ? "px-1"
+                : index === 4
+                ? "px-0"
+                : [1, 3].includes(index)
+                ? "px-15"
+                : "px-40";
+              return (
                 <ServiceItem
                   key={service.id}
-                  service={service}
+                  service={{
+                    ...service,
+                    wrapperClass: `${service.wrapperClass} ${paddingX} `,
+                  }}
                   isActive={service.id === activeServiceId}
-                  onClick={handleClick}
+                  onClick={rotateTo}
                   ref={(el: HTMLDivElement | null) => {
                     itemRefs.current[service.id] = el;
                   }}
                 />
-              ))}
-            </motion.div>
-          </div>
-
-          <div
-            className="absolute top-1/2 right-[250px] lg:right-[-400px] w-[500px] h-[500px] lg:w-[800px] lg:h-[800px] rounded-full -translate-y-1/2 pointer-events-none"
-            style={{
-              background: `radial-gradient(circle, ${COLOR_PRIMARY}80 0%, ${COLOR_PRIMARY}00 70%)`,
-            }}
-          />
-          <div
-            className="absolute top-1/2 right-[-200px] lg:right-[-400px] w-[300px] h-[300px] lg:w-[600px] lg:h-[600px] rounded-full border-8 -translate-y-1/2 pointer-events-none z-10"
-            style={{
-              background: COLOR_SECONDARY,
-              borderColor: COLOR_GREEN_300,
-            }}
-          />
+              );
+            })}
+          </motion.div>
         </div>
+
+        {/* glowing circle */}
+        <div
+          className=" absolute top-1/2 right-[250px] lg:right-[-400px] w-[500px] h-[500px] lg:w-[700px] lg:h-[800px] rounded-full -translate-y-1/2 pointer-events-none"
+          style={{
+            background: `radial-gradient(circle, ${COLOR_PRIMARY}80 0%, ${COLOR_PRIMARY}00 70%)`,
+          }}
+        />
+        <div
+          className="absolute top-1/2 right-[-200px] lg:right-[-500px] w-[300px] h-[300px] lg:w-[600px] lg:h-[600px] rounded-full border-8 -translate-y-1/2 pointer-events-none z-10"
+          style={{
+            background: COLOR_SECONDARY,
+            borderColor: COLOR_GREEN_300,
+          }}
+        />
       </div>
-    </>
+    </div>
   );
 }
